@@ -19,8 +19,6 @@
         <property name="startComponent" ref="reader"/>
     </bean>
 
-
-
     <bean id="reader" class="com.bdc.bdi.storm.integrator.test.WordReader">
         <property name="name" value="reader"/>
         <property name="fileNamePattern" value="^building.*$"/>
@@ -34,6 +32,7 @@
             </list>
         </property >
     </bean>
+    
     <bean id="HBaseComponent" class="com.bdc.bdi.storm.integrator.test.HBaseWriter">
         <property name="name" value="HBaseComponent"/>
         <property name="hBaseConfig" value="/Users/a09726a/tools/hd/hbase/conf/hbase-site.xml"/>
