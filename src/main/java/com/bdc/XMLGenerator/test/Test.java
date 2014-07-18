@@ -12,6 +12,8 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.MethodInvocationException;
 
+import com.bdc.XMLGenerator.pojo.Customer;
+
 
 public class Test {
 

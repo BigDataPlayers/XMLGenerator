@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="PipeLineService" class="com.bdc.bdi.storm.integrator.test.PipeLineService">
+        <property name="name" value="PipeLineService"/>
+        <property name="pipeLines">
+            <list>
+                <ref bean="PipeLine1" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="PipeLine1" class="com.bdc.bdi.storm.integrator.test.PipeLine">
+        <property name="name" value="PipeLine1"/>
+        <property name="startComponent" ref="reader"/>
+    </bean>
+
+
+
+    <bean id="reader" class="com.bdc.bdi.storm.integrator.test.WordReader">
+        <property name="name" value="reader"/>
+        <property name="fileNamePattern" value="^building.*$"/>
+        <property name="fileDir" value="/data/stormIntegrator/"/>
+        <property name="archiveDir" value="/data/stormIntegrator/archive/"/>
+        <property name="components">
+            <list>
+                <ref bean="HBaseComponent" />
+                <ref bean="Agg" />
+
+            </list>
+        </property >
+    </bean>
+    <bean id="HBaseComponent" class="com.bdc.bdi.storm.integrator.test.HBaseWriter">
+        <property name="name" value="HBaseComponent"/>
+        <property name="hBaseConfig" value="/Users/a09726a/tools/hd/hbase/conf/hbase-site.xml"/>
+        <property name="desthTableName" value="building"/>
+        <property name="primaryKey" value="BuildingID"/>
+        <property name="columnFamilyName" value="cf1"/>
+        <property name="metaDataTableName" value="metadata"/>
+    </bean>
+    <bean id="AggregateConfig1" class="com.bdc.bdi.storm.integrator.aggutils.AggregateConfig" scope="prototype">
+
+        <property name="aggregateName" value="building_agg"/>
+        <property name="counterName" value="cnt"/>
+        <property name="metaDataTableName" value="metadata"/>
+        <property name="columnFamilyName" value="cf1"/>
+        <property name="fields">
+            <list>
+                <value>Country</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="Agg" class="com.bdc.bdi.storm.integrator.test.HBaseAggregatesWriterComponent">
+        <property name="name" value="AggregateComponent"/>
+        <property name="aggregateConfigs">
+            <list>
+                <ref bean="AggregateConfig1" />
+            </list>
+        </property>
+         <property name="hBaseConfig" value="/Users/a09726a/tools/hd/hbase/conf/hbase-site.xml"/>
+    </bean>
+</beans>
+

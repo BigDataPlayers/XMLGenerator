@@ -1,4 +1,4 @@
-package com.bdc.XMLGenerator.test;
+package com.bdc.XMLGenerator.pojo;
 
 
 import java.util.List;
