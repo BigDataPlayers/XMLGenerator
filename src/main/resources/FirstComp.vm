@@ -20,7 +20,7 @@
     </bean>
     
 #foreach ($Bean in $Beans)
-    <bean id="$Bean.object.id" class="$Bean.object.className">
+    <bean id="$Bean.id" class="$Bean.className">
 #foreach ($Property in $Bean.properties)
         <property name="$Property.name" value="$Property.value"/>  
 #end

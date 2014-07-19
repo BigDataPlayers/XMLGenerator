@@ -3,6 +3,7 @@ package com.bdc.XMLGenerator.test;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -74,57 +75,17 @@ public class JSONReader {
 	
 	public String generateXMlStartBlock(String jsonString) {
 
-		Velocity.init();
+		Properties p = new Properties();
+		p.put("runtime.introspector.uberspect", "com.bdc.XMLGenerator.util.CustomUberspector");
+		Velocity.init(p);
 		VelocityContext context = new VelocityContext();
-
-		
-	//	JSONObject incomingJSON = new JSONObject(jsonString);
-		
-		JSONArray array = new JSONArray(jsonString); //incomingJSON.getJSONArray(null);
-		
+	
+		JSONArray array = new JSONArray(jsonString); 
 		JSONObject header = (JSONObject) array.get(0);		
 		context.put("Pipeline", header);
 		array.remove(0);
 		
-		List<JSONWrapper> beans = new ArrayList(); 
-		
-		for (int i=0; i<array.length();i++)
-		{
-			
-			JSONWrapper wrapper = new JSONWrapper(); 
-			
-			JSONObject obj = array.getJSONObject(i); 
-			wrapper.setObject(obj);
-			
-			beans.add(wrapper); 
-			
-			List<JSONObject> properties = new ArrayList(); 
-			List<JSONObject> components = new ArrayList(); 
-			
-			JSONArray a1 = obj.getJSONArray("properties"); 
-			JSONArray a2 = obj.getJSONArray("components"); 
-			
-			for (int j=0;j<a1.length();j++)
-			{
-				properties.add((JSONObject)a1.get(j)); 
-			}
-
-			for (int j=0;j<a2.length();j++)
-			{
-				components.add((JSONObject)a2.get(j)); 
-			}
-
-			
-			wrapper.setComponents(components);
-			wrapper.setProperties(properties);
-		
-		}
-			
-			
-		
-		
-		
-		context.put("Beans", beans);
+		context.put("Beans", array);
 		
 		Template template = null;
 		try {
