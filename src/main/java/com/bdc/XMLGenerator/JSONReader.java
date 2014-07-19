@@ -96,7 +96,7 @@ public class JSONReader {
 		template.merge(context, sw);
 		System.out.println(sw.toString());
 				
-		return null; //sw.toString();
+		return sw.toString();
 	}
 
 }
