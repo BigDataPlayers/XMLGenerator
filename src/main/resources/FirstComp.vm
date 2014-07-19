@@ -19,18 +19,18 @@
         <property name="startComponent" ref="$Pipeline.startComponent"/>
     </bean>
     
-    #foreach ($Bean in $Beans)
+#foreach ($Bean in $Beans)
     <bean id="$Bean.object.id" class="$Bean.object.className">
-        #foreach ($Property in $Bean.properties)
+#foreach ($Property in $Bean.properties)
         <property name="$Property.name" value="$Property.value"/>  
-        #end
+#end
         <property name="components">
             <list>
-                #foreach ($Comp in $Bean.components)
+#foreach ($Comp in $Bean.components)
                 <ref="$Comp.value"/>
-                #end
+#end
             </list>
         </property >
     </bean>
-   #end 
+#end 
 </beans>
