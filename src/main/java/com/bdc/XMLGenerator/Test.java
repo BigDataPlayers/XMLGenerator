@@ -1,4 +1,4 @@
-package com.bdc.XMLGenerator.test;
+package com.bdc.XMLGenerator;
 
 
 import java.io.StringWriter;

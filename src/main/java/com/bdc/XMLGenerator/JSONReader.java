@@ -1,4 +1,4 @@
-package com.bdc.XMLGenerator.test;
+package com.bdc.XMLGenerator;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -14,19 +14,14 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.bdc.XMLGenerator.pojo.Customer;
-import com.bdc.XMLGenerator.pojo.Service;
-
 public class JSONReader {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		JSONReader test = new JSONReader();
-		test.generateXMlStartBlock(test.generateJSONArray());
+		test.generateXMl(test.generateJSONArray());
 	}
 
 	public String generateJSONArray() {
-		// Service svc = new Service();
 		JSONArray array = new JSONArray();
 		
 		JSONObject json = new JSONObject();
@@ -73,7 +68,7 @@ public class JSONReader {
 
 	}
 	
-	public String generateXMlStartBlock(String jsonString) {
+	public String generateXMl(String jsonString) {
 
 		Properties p = new Properties();
 		p.put("runtime.introspector.uberspect", "com.bdc.XMLGenerator.util.CustomUberspector");
