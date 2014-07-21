@@ -32,7 +32,9 @@ public class JSONReader {
 		
 		array.put(json); //header
 		
-		json = new JSONObject();
+		
+		//Reader Comp Definition
+		json = new JSONObject(); 
 		json.put("id", "reader");
 		json.put("className", "com.bdc.bdi.storm.integrator.test.WordReader"); //comp header
 		
@@ -63,7 +65,101 @@ public class JSONReader {
 		json.put("components", propArray); //comp list
 		
 		array.put(json); //body
+
 		
+		
+		//Hbase Comp defination
+		json = new JSONObject(); 
+		json.put("id", "HBaseComponent");
+		json.put("className", "com.bdc.bdi.storm.integrator.test.HBaseWriter"); //comp header
+		
+		propArray = new JSONArray();
+		propJson = new JSONObject();
+		
+		propJson.put("name","name")	;
+		propJson.put("value", "HBaseComponent")	;
+		propArray.put(propJson) ;
+		
+		propJson = new JSONObject();
+		propJson.put("name", "hBaseConfig")	;
+		propJson.put("value", "/data/common/git/bdi/BigDataConfig/core-site.xml")	;
+		propArray.put(propJson) ;
+		
+		propJson = new JSONObject();
+		propJson.put("name", "desthTableName")	;
+		propJson.put("value", "building")	;
+		propArray.put(propJson) ;
+				
+		propJson = new JSONObject();
+		propJson.put("name", "primaryKey")	;
+		propJson.put("value", "BuildingID")	;
+		propArray.put(propJson) ;
+
+		propJson = new JSONObject();
+		propJson.put("name", "columnFamilyName")	;
+		propJson.put("value", "cf1")	;
+		propArray.put(propJson) ;
+
+		propJson = new JSONObject();
+		propJson.put("name", "metaDataTableName")	;
+		propJson.put("value", "metadata")	;
+		propArray.put(propJson) ; 
+
+		json.put("properties", propArray); //prop list
+		array.put(json); //body
+		
+		
+		//Aggregate Comp Definition 
+    	json = new JSONObject(); 
+		json.put("id", "Agg");
+		json.put("className", "com.bdc.bdi.storm.integrator.test.HBaseAggregatesWriterComponent"); //comp header
+		
+		propArray = new JSONArray();
+		propJson = new JSONObject();
+		
+		propJson.put("name","name")	;
+		propJson.put("value", "AggregateComponent")	;
+		propArray.put(propJson) ;
+		
+		propJson = new JSONObject();
+		propJson.put("name", "aggregateName")	;
+		propJson.put("value", "building_agg")	;
+		propArray.put(propJson) ;
+		
+		propJson = new JSONObject();
+		propJson.put("name", "counterName")	;
+		propJson.put("value", "cnt")	;
+		propArray.put(propJson) ;
+
+        propJson = new JSONObject();
+		propJson.put("name", "metaDataTableName")	;
+		propJson.put("value", "metadata")	;
+		propArray.put(propJson) ;
+
+		propJson = new JSONObject();
+		propJson.put("name", "columnFamilyName")	;
+		propJson.put("value", "cf1")	;
+		propArray.put(propJson) ;
+
+		propJson = new JSONObject();
+		propJson.put("name", "fields")	;
+		propJson.put("value", "country")	;
+		propArray.put(propJson) ; 
+
+		propJson = new JSONObject();
+		propJson.put("name", "filter")	;
+		propJson.put("value", "Country~EqualsExpression~USA,Country~EqualsExpression~USA")	;
+		propArray.put(propJson) ; 
+		
+		propJson = new JSONObject();
+		propJson.put("name", "hBaseConfig")	;
+		propJson.put("value", "/data/common/git/bdi/BigDataConfig/core-site.xml")	;
+		propArray.put(propJson) ; 
+		
+		json.put("properties", propArray); //prop list
+		array.put(json); //body
+		
+		System.out.println("JSON Request - \n" + array.toString());
 		return array.toString();
 
 	}

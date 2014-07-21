@@ -19,11 +19,13 @@
         <property name="startComponent" ref="reader"/>
     </bean>
 
+
+
     <bean id="reader" class="com.bdc.bdi.storm.integrator.test.WordReader">
         <property name="name" value="reader"/>
-        <property name="fileNamePattern" value="^building.*$"/>
-        <property name="fileDir" value="/data/stormIntegrator/"/>
-        <property name="archiveDir" value="/data/stormIntegrator/archive/"/>
+        <property name="fileNamePattern" value="building.csv"/>
+        <property name="fileDir" value="/home/experian/"/>
+        <property name="archiveDir" value="/home/experian/archive/"/>
         <property name="components">
             <list>
                 <ref bean="HBaseComponent" />
@@ -32,35 +34,28 @@
             </list>
         </property >
     </bean>
-    
+
+
     <bean id="HBaseComponent" class="com.bdc.bdi.storm.integrator.test.HBaseWriter">
         <property name="name" value="HBaseComponent"/>
-        <property name="hBaseConfig" value="/Users/a09726a/tools/hd/hbase/conf/hbase-site.xml"/>
+        <property name="hBaseConfig" value="/data/common/git/bdi/BigDataConfig/core-site.xml"/>
         <property name="desthTableName" value="building"/>
         <property name="primaryKey" value="BuildingID"/>
         <property name="columnFamilyName" value="cf1"/>
         <property name="metaDataTableName" value="metadata"/>
-    </bean>
-    <bean id="AggregateConfig1" class="com.bdc.bdi.storm.integrator.aggutils.AggregateConfig" scope="prototype">
 
+    </bean>
+
+    <bean id="Agg" class="com.bdc.bdi.storm.integrator.test.HBaseAggregatesWriterComponent">
+        <property name="name" value="AggregateComponent"/>
         <property name="aggregateName" value="building_agg"/>
         <property name="counterName" value="cnt"/>
         <property name="metaDataTableName" value="metadata"/>
         <property name="columnFamilyName" value="cf1"/>
-        <property name="fields">
-            <list>
-                <value>Country</value>
-            </list>
-        </property>
+        <property name="fields" value = "Country"/>
+        <property name="filter" value = "Country~EqualsExpression~USA,Country~EqualsExpression~USA"/>
+        <property name="hBaseConfig" value="/data/common/git/bdi/BigDataConfig/core-site.xml"/>
     </bean>
-    <bean id="Agg" class="com.bdc.bdi.storm.integrator.test.HBaseAggregatesWriterComponent">
-        <property name="name" value="AggregateComponent"/>
-        <property name="aggregateConfigs">
-            <list>
-                <ref bean="AggregateConfig1" />
-            </list>
-        </property>
-         <property name="hBaseConfig" value="/Users/a09726a/tools/hd/hbase/conf/hbase-site.xml"/>
-    </bean>
+
 </beans>
 
